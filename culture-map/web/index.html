@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Culture Map Tool</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>The Culture Map</h1>
+            <p>Based on Erin Meyer's 8-scale framework for comparing cultural differences.</p>
+        </header>
+        
+        <div class="disclaimer">
+            Scores are approximate interpretations of Erin Meyer's framework based on the book <em>The Culture Map</em> (2014) and related research — not official published data. Meyer presents country positions visually, not as exact numbers. Some countries not covered in the book are extrapolated from regional cultural patterns. Use for illustration and discussion, not as authoritative reference.
+        </div>
+
+        <main>
+            <aside class="sidebar">
+                <h3>Select Countries</h3>
+                <input type="text" id="country-search" placeholder="Search countries..." autocomplete="off">
+                <button id="toggle-selection">Clear All</button>
+                <div id="country-list" class="country-list">
+                    <!-- Countries will be populated here -->
+                </div>
+            </aside>
+            
+            <section class="chart-area">
+                <div id="svg-container">
+                    <svg id="culture-map-svg" width="800" height="700"></svg>
+                </div>
+                <div class="legend" id="chart-legend"></div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
