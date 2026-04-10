@@ -12,7 +12,7 @@ const dimensions = [
 const countryData = {
     'USA': [1, 6, 9, 4, 8, 2, 4, 2],
     'Canada': [2, 5, 8, 3, 5, 3, 6, 3],
-    'UK': [3, 4, 9, 4, 6, 3, 5, 2],
+    'United Kingdom': [3, 4, 9, 4, 6, 3, 5, 2],
     'Australia': [2, 3, 8, 2, 4, 2, 3, 2],
     'Germany': [1, 1, 2, 5, 2, 2, 1, 1],
     'Greece': [8, 8, 3, 6, 8, 8, 2, 8],
@@ -42,7 +42,33 @@ const countryData = {
     'France': [8, 2, 2, 8, 9, 7, 2, 6],
     'Iran': [9, 8, 3, 9, 8, 10, 8, 9],
     'Iraq': [10, 9, 2, 10, 9, 10, 9, 10],
-    'Afghanistan': [10, 9, 2, 10, 9, 10, 9, 10]
+    'Afghanistan': [10, 9, 2, 10, 9, 10, 9, 10],
+    'Bulgaria': [7, 4, 3, 7, 7, 7, 4, 6],
+    'Costa Rica': [8, 8, 4, 7, 8, 8, 7, 9],
+    'Croatia': [7, 5, 3, 7, 7, 7, 4, 7],
+    'Czech Republic': [4, 3, 3, 5, 5, 4, 3, 3],
+    'Denmark': [1, 2, 5, 1, 1, 2, 5, 1],
+    'Hungary': [6, 3, 3, 7, 7, 6, 3, 5],
+    'Indonesia': [9, 9, 7, 9, 8, 9, 10, 8],
+    'Ireland': [3, 5, 8, 3, 5, 3, 4, 3],
+    'Italy': [7, 3, 2, 6, 7, 7, 2, 7],
+    'Kosovo': [8, 6, 3, 8, 8, 8, 5, 8],
+    'Latvia': [4, 3, 4, 5, 5, 4, 3, 3],
+    'Lithuania': [4, 3, 4, 5, 5, 4, 3, 3],
+    'Luxembourg': [3, 3, 3, 3, 3, 3, 3, 2],
+    'Mexico': [8, 7, 4, 8, 9, 9, 7, 9],
+    'Norway': [2, 2, 6, 1, 2, 2, 5, 1],
+    'Paraguay': [9, 8, 4, 8, 9, 9, 7, 10],
+    'Poland': [5, 3, 3, 6, 6, 5, 3, 3],
+    'Romania': [7, 5, 3, 7, 7, 7, 4, 7],
+    'San Marino': [7, 3, 2, 6, 7, 7, 2, 7],
+    'Serbia': [7, 2, 3, 7, 7, 7, 2, 6],
+    'Slovakia': [5, 4, 3, 6, 6, 5, 3, 3],
+    'Slovenia': [4, 3, 3, 5, 5, 4, 3, 3],
+    'South Africa': [4, 4, 7, 4, 5, 5, 4, 5],
+    'Switzerland': [1, 1, 2, 3, 2, 2, 2, 1],
+    'United Arab Emirates': [8, 7, 3, 9, 8, 9, 7, 7],
+    'Uruguay': [7, 6, 4, 7, 8, 8, 6, 8]
 };
 
 const colors = [
@@ -54,7 +80,7 @@ const colors = [
     '#2e7d32', '#ef6c00', '#4e342e', '#37474f'
 ];
 
-let selectedCountries = ['USA', 'Singapore', 'Australia', 'Canada'];
+let selectedCountries = ['Canada', 'Brazil'];
 const countryColors = {};
 Object.keys(countryData).forEach((country, index) => {
     countryColors[country] = colors[index % colors.length];
@@ -64,11 +90,19 @@ const svg = document.getElementById('culture-map-svg');
 const countryListEl = document.getElementById('country-list');
 const legendEl = document.getElementById('chart-legend');
 const toggleBtn = document.getElementById('toggle-selection');
+const searchEl = document.getElementById('country-search');
+
+let searchQuery = '';
 
 function init() {
     renderCountryList();
     renderChart();
     
+    searchEl.addEventListener('input', () => {
+        searchQuery = searchEl.value.toLowerCase();
+        renderCountryList();
+    });
+
     toggleBtn.addEventListener('click', () => {
         if (selectedCountries.length > 0) {
             selectedCountries = [];
@@ -81,8 +115,9 @@ function init() {
 
 function renderCountryList() {
     countryListEl.innerHTML = '';
-    const allCountries = Object.keys(countryData).sort();
-    
+    const allCountries = Object.keys(countryData).sort()
+        .filter(c => c.toLowerCase().includes(searchQuery));
+
     // Split into selected and unselected
     const selected = allCountries.filter(c => selectedCountries.includes(c));
     const unselected = allCountries.filter(c => !selectedCountries.includes(c));
